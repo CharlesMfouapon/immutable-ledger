@@ -1,0 +1,39 @@
+[package]
+name = "immutable-ledger"
+version = "0.1.0"
+edition = "2021"
+description = "Cryptographically verifiable double-entry ledger with Merkle proofs"
+license = "Apache-2.0"
+repository = "https://github.com/CharlesMfouapon/immutable-ledger"
+
+[dependencies]
+# Cryptography
+sha2 = "0.10"
+ed25519-dalek = { version = "2", features = ["serde"] }
+merkle = "0.4"
+
+# Serialization  
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+bincode = "1"
+
+# Database (SQLite for portability, Postgres-ready)
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# Concurrency
+tokio = { version = "1", features = ["full"] }
+parking_lot = "0.12"
+
+[dev-dependencies]
+proptest = "1"
+criterion = "0.5"
+test-log = "0.2"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
